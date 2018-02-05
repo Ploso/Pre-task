@@ -5,23 +5,13 @@ public class AstarAlgorithm {
 
     public List<Node> CalculatePath(Node start, Node goal) {
         AstarStack openSet;
-        //List<Node> openSet = new List<Node>();
         List<Node> result = new List<Node>();
         HashSet<Node> closedSet = new HashSet<Node>();
-        //openSet.Add(start);
         openSet = new AstarStack(start);
 
-        //while (openSet.Count > 0) {
         while (!openSet.IsEmpty()) {
-            //Node currentNode = openSet[0];
+
             Node currentNode = openSet.Retrieve();
-
-            //for (int i = 0; i < openSet.Count; i++) {
-            //    if (openSet[i].FCost < currentNode.FCost || openSet[i].FCost == currentNode.FCost && openSet[i].HCost < currentNode.HCost)
-            //        currentNode = openSet[i];
-            //}
-
-            //openSet.Remove(currentNode);
             closedSet.Add(currentNode);
             if (currentNode.NodeState != Node.State.TargetNode && currentNode.NodeState != Node.State.StartNode) currentNode.NodeState = Node.State.Closed;
 
@@ -29,7 +19,6 @@ public class AstarAlgorithm {
 
             foreach (Node n in currentNode.GetNeighbors()) {
                 if (n.NodeState == Node.State.Obstacle || closedSet.Contains(n)) continue;
-
                 int newDistanceCost = currentNode.GCost + GetDistance(currentNode, n);
                 if (newDistanceCost < n.GCost || !openSet.Search(n)) {
                     n.GCost = newDistanceCost;
